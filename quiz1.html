@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simple Quiz Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0f8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .quiz-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+      width: 400px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2 id="question">Loading question...</h2>
+    <button class="btn" onclick="checkAnswer(0)" id="btn0"></button>
+    <button class="btn" onclick="checkAnswer(1)" id="btn1"></button>
+    <button class="btn" onclick="checkAnswer(2)" id="btn2"></button>
+    <button class="btn" onclick="checkAnswer(3)" id="btn3"></button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "What is the capital of India?",
+        options: ["Mumbai", "Delhi", "Kolkata", "Chennai"],
+        answer: 1
+      },
+      {
+        question: "Which language is used for web development?",
+        options: ["Python", "HTML", "C", "Java"],
+        answer: 1
+      },
+      {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Jupiter", "Venus"],
+        answer: 1
+      },
+      {
+        question: "What is 2 + 2?",
+        options: ["3", "4", "5", "6"],
+        answer: 1
+      },
+      {
+        question: "Which animal is the king of jungle?",
+        options: ["Tiger", "Elephant", "Lion", "Leopard"],
+        answer: 2
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      if (current >= questions.length) {
+        document.getElementById("question").innerText = "Quiz Completed!";
+        document.getElementById("result").innerText = `Your Score: ${score} / ${questions.length}`;
+        for (let i = 0; i < 4; i++) {
+          document.getElementById("btn" + i).style.display = "none";
+        }
+        return;
+      }
+
+      const q = questions[current];
+      document.getElementById("question").innerText = q.question;
+      q.options.forEach((opt, index) => {
+        document.getElementById("btn" + index).innerText = opt;
+      });
+    }
+
+    function checkAnswer(choice) {
+      if (choice === questions[current].answer) {
+        score++;
+      }
+      current++;
+      loadQuestion();
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
